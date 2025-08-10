@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Personal Loan Application</title>
+  <link rel="icon" href="loan.png" type="image/png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: #222;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #ffe6ff, #f0eaff, #f8f4ff);
+      background-size: 200% 200%;
+      animation: lightFlow 12s ease infinite;
+    }
+
+    @keyframes lightFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      background: rgba(128, 0, 128, 0.95);
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+      font-size: 30px;
+      font-weight: bold;
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      letter-spacing: 1px;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      padding: 60px 20px 100px;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      max-width: 650px;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .form-container:hover {
+      transform: scale(1.01);
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+      color: #5a007a;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .submit-btn {
+      background-color: #800080;
+      color: white;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background-color: #a94db3;
+    }
+
+    .floating-icons {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1001;
+    }
+
+    .icon-btn {
+      background-color: #800080;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background-color: #a94db3;
+      transform: scale(1.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 7% auto;
+      padding: 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 700px;
+      position: relative;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .modal h3 {
+      text-align: center;
+      color: #800080;
+      margin-bottom: 15px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: crimson;
+      cursor: pointer;
+    }
+
+    #emiResult {
+      font-weight: bold;
+      color: green;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+
+    footer {
+      background-color: #2d002d;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer a {
+      color: #eecfff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 📱 Media Query for Responsive Mobile Screens */
+    @media (max-width: 780px) {
+      header {
+        font-size: 22px;
+        padding: 20px 10px;
+      }
+
+      .main-container {
+        padding: 30px 10px;
+      }
+
+      .form-container {
+        padding: 20px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 100%;
+        box-shadow: none;
+      }
+
+      label {
+        font-size: 14px;
+      }
+
+      input, select, textarea {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      .submit-btn {
+        font-size: 15px;
+        padding: 10px 16px;
+      }
+
+      .modal-content {
+        width: 95%;
+        padding: 20px;
+      }
+
+      .floating-icons {
+        top: unset;
+        bottom: 20px;
+        right: 10px;
+        flex-direction: row;
+      }
+
+      .icon-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+      }
+
+      footer {
+        font-size: 12px;
+        padding: 15px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>👤 Personal Loan Application Portal</header>
+
+  <div class="main-container">
+    <div class="form-container">
+      <form id="personalLoanForm" onsubmit="submitPersonalLoan(event)">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required>
+
+        <label for="amount">Loan Amount (INR)</label>
+        <input type="number" id="amount" required>
+
+        <label for="purpose">Purpose of Loan</label>
+        <input type="text" id="purpose" required>
+
+        <label for="employment">Employment Type</label>
+        <select id="employment" required>
+          <option value="">Select</option>
+          <option value="salaried">Salaried</option>
+          <option value="self-employed">Self-Employed</option>
+          <option value="unemployed">Unemployed</option>
+        </select>
+
+        <label for="address">Address</label>
+        <textarea id="address" rows="3" required></textarea>
+
+        <label for="idProof">Upload ID Proof</label>
+        <input type="file" id="idProof" accept=".pdf,.jpg,.jpeg,.png" required>
+
+        <button type="submit" class="submit-btn">📩 Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating Action Buttons -->
+  <div class="floating-icons">
+    <button class="icon-btn" onclick="openEMIModal()" title="EMI Calculator">📊</button>
+    <button class="icon-btn" onclick="openVideoModal()" title="Tutorial Video">🎥</button>
+  </div>
+
+  <!-- EMI Modal -->
+  <div id="emiModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeEMIModal()">&times;</span>
+      <h3>📊 EMI Calculator</h3>
+      <label for="loanAmount">Loan Amount (₹)</label>
+      <input type="number" id="loanAmount" placeholder="e.g. 200000">
+
+      <label for="interestRate">Interest Rate (%)</label>
+      <input type="number" id="interestRate" placeholder="e.g. 10.5">
+
+      <label for="loanTenure">Tenure (Years)</label>
+      <input type="number" id="loanTenure" placeholder="e.g. 5">
+
+      <button class="submit-btn" onclick="calculateEMI()">Calculate EMI</button>
+      <div id="emiResult"></div>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeVideoModal()">&times;</span>
+      <h3>🎥 Personal Loan Tutorial</h3>
+      <video controls>
+        <source src="personal.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 SBOV Loan Services | Powered by SBOV
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function submitPersonalLoan(event) {
+      event.preventDefault();
+      alert("✅ Your personal loan is approved!");
+      window.location.href = "personal loan.html";
+    }
+
+    function openEMIModal() {
+      document.getElementById("emiModal").style.display = "block";
+    }
+
+    function closeEMIModal() {
+      document.getElementById("emiModal").style.display = "none";
+      document.getElementById("emiResult").innerText = "";
+    }
+
+    function calculateEMI() {
+      const P = parseFloat(document.getElementById("loanAmount").value);
+      const annualRate = parseFloat(document.getElementById("interestRate").value);
+      const tenureYears = parseFloat(document.getElementById("loanTenure").value);
+
+      if (!P || !annualRate || !tenureYears) {
+        alert("Please fill all EMI fields.");
+        return;
+      }
+
+      const R = annualRate / 12 / 100;
+      const N = tenureYears * 12;
+      const emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+      document.getElementById("emiResult").innerText = `Monthly EMI: ₹${emi.toFixed(2)}`;
+    }
+
+    function openVideoModal() {
+      document.getElementById("videoModal").style.display = "block";
+    }
+
+    function closeVideoModal() {
+      document.getElementById("videoModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains("modal")) {
+        closeEMIModal();
+        closeVideoModal();
+      }
+    }
+  </script>
+
+</body>
+</html>

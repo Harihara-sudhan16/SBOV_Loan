@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gold Loan Application</title>
+  <link rel="icon" type="image/png" href="gold.jpeg"> <!-- Gold bar icon -->
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #fff8dc, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: rgba(255, 215, 0, 0.15);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 15px rgba(184, 134, 11, 0.3);
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      color: #b8860b;
+      text-shadow: 1px 1px 3px rgba(184, 134, 11, 0.5);
+      font-size: 2rem;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      padding: 30px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(218, 165, 32, 0.4);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #daa520;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #b8860b;
+    }
+
+    footer {
+      background-color: #efcb38;
+      color: #eb1313;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    footer a {
+      color: #fc062b;
+      text-decoration: none;
+    }
+
+    /* Floating icons */
+    .floating-icon {
+      position: fixed;
+      width: 55px;
+      height: 55px;
+      background-color: gold;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(218, 165, 32, 0.6);
+      cursor: pointer;
+      font-size: 26px;
+      z-index: 1000;
+      color: white;
+    }
+
+    .floating-icon:hover {
+      background-color: #b8860b;
+    }
+
+    #emiIcon {
+      bottom: 80px;
+      right: 25px;
+    }
+
+    #videoIcon {
+      bottom: 80px;
+      left: 25px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .modal-content h3 {
+      color: #003366;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .emi-result {
+      font-weight: bold;
+      color: green;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    video {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, gold, transparent);
+      filter: blur(50px);
+      opacity: 0.3;
+      z-index: -1;
+      animation: glow 6s ease-in-out infinite alternate;
+    }
+
+    body::before {
+      top: 10%;
+      left: 5%;
+    }
+
+    body::after {
+      bottom: 10%;
+      right: 5%;
+      animation-duration: 8s;
+    }
+
+    @keyframes glow {
+      from { transform: scale(1); opacity: 0.2; }
+      to { transform: scale(1.2); opacity: 0.4; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🏆 Gold Loan Application</h1>
+  </header>
+
+  <main>
+    <div class="container">
+      <form id="loanForm" onsubmit="submitForm(event)">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" required>
+
+        <label for="loanAmount">Loan Amount (₹):</label>
+        <input type="number" id="loanAmount" required>
+
+        <label for="goldDetails">Gold Description (e.g. weight, purity):</label>
+        <textarea id="goldDetails" rows="3" required></textarea>
+
+        <button type="submit">Apply Now</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Floating Icons -->
+  <div id="emiIcon" class="floating-icon" onclick="openModal('emiModal')">🧮</div>
+  <div id="videoIcon" class="floating-icon" onclick="openModal('videoModal')">🎥</div>
+
+  <!-- EMI Calculator Modal -->
+  <div id="emiModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('emiModal')">&times;</span>
+      <h3>🧮 EMI Calculator</h3>
+      <label for="principal">Principal Amount (₹):</label>
+      <input type="number" id="principal">
+
+      <label for="rate">Annual Interest Rate (%):</label>
+      <input type="number" id="rate">
+
+      <label for="months">Loan Duration (months):</label>
+      <input type="number" id="months">
+
+      <button type="button" onclick="calculateEMI()">Calculate</button>
+      <p id="emiResult" class="emi-result"></p>
+    </div>
+  </div>
+
+  <!-- Tutorial Video Modal -->
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('videoModal')">&times;</span>
+      <h3>🎥 How to Apply</h3>
+      <video controls>
+        <source src="Gold.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 SBOV Loan Services | Powered by SBOV
+  </footer>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    function calculateEMI() {
+      const P = parseFloat(document.getElementById("principal").value);
+      const r = parseFloat(document.getElementById("rate").value) / 12 / 100;
+      const n = parseInt(document.getElementById("months").value);
+      const result = document.getElementById("emiResult");
+
+      if (P > 0 && r > 0 && n > 0) {
+        const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+        result.innerText = `Estimated EMI: ₹${emi.toFixed(2)} per month`;
+      } else {
+        result.innerText = "Please enter all fields correctly.";
+      }
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert("✅ Your Gold Loan Application has been submitted!");
+      document.getElementById("loanForm").reset();  // Clears the form fields
+    }
+
+    window.onclick = function(event) {
+      document.querySelectorAll('.modal').forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    };
+  </script>
+</body>
+</html>

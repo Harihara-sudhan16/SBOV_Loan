@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Options - SBOV Portal</title>
+  <link rel="icon" href="image/logo.jpg" type="image/jpg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298, #0f2027);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 0;
+      font-size: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1e3c72, #2a5298, #0f2027);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 50px;
+    }
+
+    .loan-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .loan-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .loan-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00c6ff;
+      margin-bottom: 15px;
+    }
+
+    .loan-desc {
+      font-size: 15px;
+      color: #ccc;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .apply-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #00c6ff;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .apply-btn:hover {
+      background: #0080ff;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      /* Optional: add responsive styles if using nav or mobile menu */
+    }
+
+    @media (max-width: 500px) {
+      header {
+        font-size: 28px;
+        padding: 30px 10px;
+      }
+
+      .loan-title {
+        font-size: 18px;
+      }
+
+      .loan-desc {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>💼 Explore Our Loan Options</header>
+
+  <div class="container">
+    <div class="loan-card">
+      <div class="loan-title">🏠 Home Loan</div>
+      <div class="loan-desc">Buy your dream house with flexible EMI options and low interest rates.</div>
+      <a href="home loan.html" class="apply-btn">Apply Now</a>
+    </div>
+
+    <div class="loan-card">
+      <div class="loan-title">👤 Personal Loan</div>
+      <div class="loan-desc">Meet personal needs like travel, weddings, or emergencies easily.</div>
+      <a href="personal loan.html" class="apply-btn">Apply Now</a>
+    </div>
+
+    <div class="loan-card">
+      <div class="loan-title">🎓 Education Loan</div>
+      <div class="loan-desc">Finance your higher education in India or abroad without stress.</div>
+      <a href="education loan.html" class="apply-btn">Apply Now</a>
+    </div>
+
+    <div class="loan-card">
+      <div class="loan-title">🚗 Car Loan</div>
+      <div class="loan-desc">Get behind the wheel with our quick and easy auto loans.</div>
+      <a href="car loan.html" class="apply-btn">Apply Now</a>
+    </div>
+
+    <div class="loan-card">
+      <div class="loan-title">🏢 Business Loan</div>
+      <div class="loan-desc">Expand your business or manage working capital with our support.</div>
+      <a href="business loan.html" class="apply-btn">Apply Now</a>
+    </div>
+
+    <div class="loan-card">
+      <div class="loan-title">🪙 Gold Loan</div>
+      <div class="loan-desc">Use your gold to get instant cash at low interest rates.</div>
+      <a href="gold loan.html" class="apply-btn">Apply Now</a>
+    </div>
+  </div>
+
+</body>
+</html>

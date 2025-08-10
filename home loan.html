@@ -1,0 +1,353 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Loan Application</title>
+  <link rel="icon" href="loan.png" type="image/png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(-45deg, #f3f4f7, #dbe9f4, #eaf0ff, #f9f9f9);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      background: rgba(0, 51, 102, 0.85);
+      color: #fff;
+      text-align: center;
+      padding: 25px 10px;
+      font-size: 32px;
+      font-weight: bold;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-bottom: 3px solid #b3d1ff;
+    }
+
+    footer {
+      background: rgba(0, 51, 102, 0.9);
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      font-size: 14px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      box-shadow: 0 -4px 6px rgba(0,0,0,0.2);
+    }
+
+    .form-container {
+      max-width: 650px;
+      margin: 50px auto 100px;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(4px);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #003366;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .submit-btn {
+      background-color: #003366;
+      color: white;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    #confirmation {
+      display: none;
+      margin-top: 20px;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .floating-icons {
+      position: fixed;
+      top: 120px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 1000;
+    }
+
+    .floating-icons button {
+      background-color: #003366;
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .floating-icons button:hover {
+      transform: scale(1.1);
+      background-color: #004080;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .modal-content h3 {
+      color: #003366;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .emi-result {
+      font-weight: bold;
+      color: green;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    iframe, video {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+    }
+
+    /* 📱 Responsive Design for Mobile Screens */
+    @media (max-width: 780px) {
+      header {
+        font-size: 24px;
+        padding: 18px 10px;
+      }
+
+      .form-container {
+        padding: 25px 15px;
+        margin: 30px 10px 100px;
+        border-radius: 10px;
+      }
+
+      input, select, textarea {
+        padding: 10px;
+        font-size: 13px;
+      }
+
+      .submit-btn {
+        padding: 12px;
+        font-size: 15px;
+      }
+
+      .floating-icons {
+        top: unset;
+        bottom: 20px;
+        right: 10px;
+        flex-direction: row;
+        gap: 15px;
+      }
+
+      .floating-icons button {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        padding: 10px;
+      }
+
+      .modal-content {
+        padding: 20px;
+        width: 95%;
+      }
+
+      video {
+        height: 200px;
+      }
+
+      footer {
+        font-size: 12px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>🏠 Home Loan Application</header>
+
+  <!-- Floating Icons for EMI and Tutorial -->
+  <div class="floating-icons">
+    <button onclick="openModal('emiModal')" title="EMI Calculator">📊</button>
+    <button onclick="openModal('videoModal')" title="How-To Video">🎥</button>
+  </div>
+
+  <div class="form-container">
+    <form id="loanForm" onsubmit="submitForm(event)">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" required>
+
+      <label for="amount">Loan Amount (INR)</label>
+      <input type="number" id="amount" required>
+
+      <label for="employment">Employment Type</label>
+      <select id="employment" required>
+        <option value="">Select Employment</option>
+        <option value="salaried">Salaried</option>
+        <option value="self-employed">Self-Employed</option>
+        <option value="retired">Retired</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="address">Residential Address</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <label for="idProof">Upload ID Proof</label>
+      <input type="file" id="idProof" accept=".pdf,.jpg,.jpeg,.png" required>
+
+      <button type="submit" class="submit-btn">📨 Submit Application</button>
+      <div id="confirmation">✅ Your application has been submitted!</div>
+    </form>
+  </div>
+
+  <!-- EMI Modal -->
+  <div class="modal" id="emiModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('emiModal')">&times;</span>
+      <h3>📊 EMI Calculator</h3>
+      <label for="loanAmount">Loan Amount (₹)</label>
+      <input type="number" id="loanAmount" placeholder="e.g. 500000">
+
+      <label for="interestRate">Interest Rate (Annual %)</label>
+      <input type="number" id="interestRate" placeholder="e.g. 7.5">
+
+      <label for="loanTenure">Loan Tenure (Years)</label>
+      <input type="number" id="loanTenure" placeholder="e.g. 20">
+
+      <button class="submit-btn" onclick="calculateEMI()">Calculate EMI</button>
+      <div id="emiResult" class="emi-result"></div>
+    </div>
+  </div>
+
+  <!-- Tutorial Video Modal -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('videoModal')">&times;</span>
+      <h3>🎥 How to Apply for a Home Loan</h3>
+      <video controls>
+        <source src="home.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 SBOV Loan Services | Powered by SBOV
+  </footer>
+
+  <script>
+    function submitForm(event) {
+      event.preventDefault();
+      alert("✅ Your loan is approved!");
+      // Clear the form immediately after alert
+      document.getElementById("loanForm").reset();
+      // Optionally show confirmation message briefly (or remove this)
+      const conf = document.getElementById("confirmation");
+      conf.style.display = "block";
+      setTimeout(() => {
+        conf.style.display = "none";
+      }, 3000);
+    }
+
+    function calculateEMI() {
+      const P = parseFloat(document.getElementById("loanAmount").value);
+      const annualRate = parseFloat(document.getElementById("interestRate").value);
+      const tenureYears = parseFloat(document.getElementById("loanTenure").value);
+
+      if (!P || !annualRate || !tenureYears) {
+        alert("Please fill all EMI fields.");
+        return;
+      }
+
+      const R = annualRate / 12 / 100;
+      const N = tenureYears * 12;
+      const emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+      document.getElementById("emiResult").innerText = `Your Monthly EMI is ₹${emi.toFixed(2)}`;
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      ['emiModal', 'videoModal'].forEach(id => {
+        const modal = document.getElementById(id);
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Business Loan Application</title>
+  <link rel="icon" href="loan.png" type="image/png" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at center, #e0f7fa 0%, #f0f0f0 100%);
+    }
+
+    header {
+      background: linear-gradient(to right, #002d2d, #004d40);
+      color: white;
+      padding: 25px 10px;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      text-shadow: 1px 1px 4px black;
+    }
+
+    footer {
+      background: linear-gradient(to right, #004d40, #002d2d);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .form-section {
+      background: #ffffffee;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 520px;
+    }
+
+    h3 {
+      text-align: center;
+      color: #004d40;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #bbb;
+      margin-bottom: 14px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #004d40;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00796b;
+    }
+
+    /* Floating Icon Buttons */
+    .floating-icon {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 999;
+    }
+
+    .floating-icon button {
+      width: 50px;
+      height: 50px;
+      font-size: 22px;
+      border-radius: 50%;
+      border: none;
+      background-color: #004d40;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s;
+    }
+
+    .floating-icon button:hover {
+      background-color: #00796b;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 520px;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 26px;
+      color: red;
+      cursor: pointer;
+    }
+
+    iframe,
+    video {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    .emi-result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+      text-align: center;
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 600px) {
+      /* Container stacks vertically and padding adjusts */
+      .main-container {
+        flex-direction: column;
+        padding: 20px 15px;
+      }
+
+      /* Form full width and no shadow for clean mobile */
+      .form-section {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      /* Smaller header and footer fonts */
+      header {
+        font-size: 24px;
+        padding: 20px 10px;
+      }
+
+      footer {
+        font-size: 12px;
+        padding: 10px 5px;
+      }
+
+      /* Floating icons horizontally aligned at bottom */
+      .floating-icon {
+        right: 10px;
+        bottom: 20px;
+        top: auto;
+        transform: none;
+        flex-direction: row;
+        gap: 12px;
+      }
+
+      .floating-icon button {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+      }
+
+      /* Inputs and buttons larger font for better tap targets */
+      input,
+      select,
+      textarea,
+      button {
+        font-size: 16px;
+      }
+
+      /* Modal content width for mobile */
+      .modal-content {
+        width: 95%;
+        margin: 10% auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>🏢 Business Loan Application Portal</header>
+
+  <!-- Floating Buttons -->
+  <div class="floating-icon">
+    <button title="Tutorial Video" onclick="openModal('videoModal')">🎥</button>
+    <button title="EMI Calculator" onclick="openModal('emiModal')">💸</button>
+  </div>
+
+  <div class="main-container">
+    <div class="form-section">
+      <h3>📋 Application Form</h3>
+
+      <form id="bizLoanForm" onsubmit="submitForm(event)">
+        <label for="ownerName">Business Owner Name:</label>
+        <input type="text" id="ownerName" required />
+
+        <label for="businessName">Business Name:</label>
+        <input type="text" id="businessName" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
+
+        <label for="phone">Mobile Number:</label>
+        <input type="tel" id="phone" required />
+
+        <label for="industry">Business Industry:</label>
+        <input type="text" id="industry" required />
+
+        <label for="turnover">Annual Turnover (₹):</label>
+        <input type="number" id="turnover" required />
+
+        <label for="loanAmount">Loan Amount Required (₹):</label>
+        <input type="number" id="loanAmount" required />
+
+        <label for="purpose">Purpose of Loan:</label>
+        <textarea id="purpose" rows="3" required></textarea>
+
+        <label for="idproof">Upload ID Proof:</label>
+        <input type="file" id="idproof" accept=".pdf,.jpg,.jpeg,.png" required />
+
+        <label for="regProof">Business Registration Proof:</label>
+        <input type="file" id="regProof" accept=".pdf,.jpg,.jpeg,.png" required />
+
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('videoModal')">&times;</span>
+      <h3>📽️ How to Apply for Business Loan</h3>
+      <video controls>
+        <source src="business.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <!-- EMI Modal -->
+  <div id="emiModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('emiModal')">&times;</span>
+      <h3>💰 EMI Calculator</h3>
+      <label>Loan Amount (₹):</label>
+      <input type="number" id="bizLoan" />
+
+      <label>Interest Rate (% per annum):</label>
+      <input type="number" id="bizRate" step="0.01" />
+
+      <label>Loan Tenure (Months):</label>
+      <input type="number" id="bizTenure" />
+
+      <button onclick="calculateEMI()">Calculate EMI</button>
+      <div class="emi-result" id="bizEmiResult"></div>
+    </div>
+  </div>
+
+  <footer>© 2025 SBOV Loan Services | Powered by SBOV</footer>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = "block";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      const modals = ["videoModal", "emiModal"];
+      modals.forEach((id) => {
+        const modal = document.getElementById(id);
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      });
+    };
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert("✅ Your business loan application has been submitted successfully!");
+      document.getElementById("bizLoanForm").reset();
+    }
+
+    function calculateEMI() {
+      const principal = parseFloat(document.getElementById("bizLoan").value);
+      const rate = parseFloat(document.getElementById("bizRate").value) / 12 / 100;
+      const tenure = parseFloat(document.getElementById("bizTenure").value);
+
+      if (!principal || !rate || !tenure) {
+        document.getElementById("bizEmiResult").innerText = "⚠️ Please fill all EMI fields.";
+        return;
+      }
+
+      const emi =
+        (principal * rate * Math.pow(1 + rate, tenure)) /
+        (Math.pow(1 + rate, tenure) - 1);
+      document.getElementById("bizEmiResult").innerText = `📌 Monthly EMI: ₹${emi.toFixed(
+        2
+      )}`;
+    }
+  </script>
+</body>
+</html>

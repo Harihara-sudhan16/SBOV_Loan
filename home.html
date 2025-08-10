@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SBOV Loan Portal</title>
+  <link rel="icon" href="logo.jpg" type="image/jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #f3f3f3, #dfe9f3);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: linear-gradient(to right, #001f3f, #004080);
+      color: rgb(11, 230, 230);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .left-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .left-section img {
+      height: 55px;
+      width: 55px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 15px;
+      border: 2px solid white;
+    }
+
+    .logo-text {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+      transform: scale(1.05);
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .alert-banner {
+      background: linear-gradient(to right, #ffcc00, #ffe680);
+      color: #003366;
+      font-weight: bold;
+      padding: 8px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 60px 20px 30px;
+      text-align: center;
+    }
+
+    .content h2 {
+      color: #002147;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 18px;
+      color: #333;
+      max-width: 750px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .why-choose {
+      padding: 40px 20px;
+      background-color: #ffffff;
+      text-align: center;
+    }
+
+    .why-choose h3 {
+      font-size: 30px;
+      color: #003366;
+      margin-bottom: 20px;
+    }
+
+    .why-choose ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 0;
+    }
+
+    .why-choose li {
+      background: #f0f8ff;
+      padding: 20px;
+      border-radius: 12px;
+      width: 260px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .why-choose li:hover {
+      transform: translateY(-5px);
+    }
+
+    .why-choose li h4 {
+      font-size: 20px;
+      color: #002147;
+      margin-bottom: 10px;
+    }
+
+    .why-choose li p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    footer {
+      background: linear-gradient(to right, #001f3f, #004080);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+    footer a{
+      text-decoration: none;
+      color: #01e1f5;
+    }
+
+    .slideshow-wrapper {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 260px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 160px;
+    }
+
+    .slide {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0;
+      background-color: #fff;
+    }
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 4px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.4s ease, transform 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: #003366;
+      transform: scale(1.3);
+    }
+
+    .social-icons {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 999;
+    }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      color: white;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .facebook { background-color: #1877F2; }
+    .twitter { background-color: #1DA1F2; }
+    .linkedin { background-color: #0077B5; }
+    .instagram {
+      background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #4f5bd5);
+    }
+
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      color: white;
+      font-size: 24px;
+      flex-direction: column;
+    }
+
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Mobile Menu & Responsive Tweaks */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 200px;
+        background: #004080;
+        padding: 15px;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+      }
+      nav ul.show {
+        left: 0;
+      }
+      nav ul li {
+        margin: 12px 0;
+      }
+      .menu-toggle {
+        display: block;
+        font-size: 24px;
+        cursor: pointer;
+        color: white;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .logo-text {
+        font-size: 18px;
+      }
+      .content h2 {
+        font-size: 24px;
+      }
+      .content p {
+        font-size: 14px;
+      }
+      .why-choose ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      .slideshow-wrapper {
+        width: 90%;
+        left: 5%;
+        bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+    Logging out... Please wait
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="left-section">
+      <img src="logo.jpg" alt="SBOV Logo">
+      <div class="logo-text">Sattur Bank Of Virudhunagar</div>
+    </div>
+    <i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="loan.html">Loan</a></li>
+        <li><a href="status.html">Status</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a onclick="delayedLogout()">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Alert Banner -->
+  <div class="alert-banner">
+    <marquee>📢 Limited-time offer: Get instant approval on personal and car loans with low interest!</marquee>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h2>Welcome to the Sattur Bank Of Virudhunagar Loan Portal</h2>
+    <p>We provide reliable and secure loans for all your personal, home, car, and educational needs. Start your loan journey with confidence today!</p>
+  </div>
+
+  <!-- Why Choose SBOV -->
+  <div class="why-choose">
+    <h3>Why Choose SBOV Loans?</h3>
+    <ul>
+      <li><h4>🏦 Trusted Bank</h4><p>India’s largest and most trusted banking institution.</p></li>
+      <li><h4>⚡ Fast Approvals</h4><p>Quick application and same-day loan processing.</p></li>
+      <li><h4>📉 Low Interest</h4><p>Enjoy competitive interest rates tailored to your needs.</p></li>
+      <li><h4>💳 Flexible EMI</h4><p>Repay your loan in easy and convenient monthly installments.</p></li>
+    </ul>
+  </div>
+
+  <!-- Slideshow -->
+  <div class="slideshow-wrapper">
+    <div class="slideshow-container">
+      <img class="slide" src="home.jpg" alt="SBOV Home">
+      <img class="slide active" src="gold.jpeg" alt="Loan Banner">
+      <img class="slide" src="car.jpg" alt="Car Loan">
+      <img class="slide" src="education.jpg" alt="Education Loan">
+    </div>
+    <div class="dots">
+      <span class="dot"></span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Sattur Bank Of Virudhunagar. All rights reserved.</p>
+    <p>Contact us: <a href="contact.html">helpdesk@sbov.co.in</a> | <a href="Privacy Policy.html">Privacy Policy</a></p>
+    <p>Follow us: 
+      <a href="https://www.facebook.com/">Facebook</a> | 
+      <a href="https://www.facebook.com/">Twitter</a> | 
+      <a href="https://in.linkedin.com/">LinkedIn</a>
+    </p>
+  </footer>
+
+  <!-- Social Icons -->
+  <div class="social-icons">
+    <a href="https://www.facebook.com/" class="facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.facebook.com/" class="twitter"><i class="fab fa-twitter"></i></a>
+    <a href="https://in.linkedin.com/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://www.instagram.com/_.sudhxn._.x" class="instagram"><i class="fab fa-instagram"></i></a>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Slideshow
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+
+    function showSlides() {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        dots[i].classList.remove("active");
+      });
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add("active");
+      dots[slideIndex].classList.add("active");
+      setTimeout(showSlides, 3000);
+    }
+    window.onload = showSlides;
+
+    // Toggle Mobile Menu
+    function toggleMenu() {
+      document.querySelector("nav ul").classList.toggle("show");
+    }
+
+    // Logout Delay with Loader
+    function delayedLogout() {
+      document.getElementById("loadingScreen").style.display = "flex";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 5000);
+    }
+  </script>
+
+</body>
+</html>
